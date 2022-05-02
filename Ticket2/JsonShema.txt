@@ -1,0 +1,79 @@
+{
+  "type": "object",
+  "properties": {
+    "operation_type": {
+      "type": "string"
+    },
+    "operration_time": {
+      "type": "string"
+    },
+    "operation_place": {
+      "type": "string"
+    },
+    "passenger": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "patronymic": {
+          "type": "string"
+        },
+        "doc_type": {
+          "type": "string"
+        },
+        "doc_number": {
+          "type": "string"
+        },
+        "birthdate": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "passenger_type": {
+          "type": "string"
+        },
+        "ticket_number": {
+          "type": "string"
+        },
+        "ticket_type": {
+          "type": "integer"
+        }
+      }
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "airline_code": {
+            "type": "string"
+          },
+          "fligth_num": {
+            "type": "integer"
+          },
+          "depart_place": {
+            "type": "string"
+          },
+          "depart_datetime": {
+            "type": "string"
+          },
+          "arrive_place": {
+            "type": "string"
+          },
+          "arrive_datetime": {
+            "type": "string"
+          },
+          "pnr_id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
+            
