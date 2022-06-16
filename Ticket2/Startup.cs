@@ -30,6 +30,8 @@ namespace Ticket2
         {
             services.AddControllers();
             
+            services.AddControllers().AddNewtonsoftJson();
+
             services.AddDbContext<TicketContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TicketContext")));
             
@@ -44,6 +46,7 @@ namespace Ticket2
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket2 v1"));
+                app.UseJsonValid();
             }
 
             app.UseHttpsRedirection();

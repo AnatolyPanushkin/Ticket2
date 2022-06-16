@@ -1,10 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
-using Ticket2.Models;
 using Ticket2.ValidationJson;
 
 
@@ -22,24 +21,35 @@ namespace Ticket2.Middleware
         
         public async Task Invoke(HttpContext httpContext)
         {
+            var schemaSale = JSchema.Parse(File.ReadAllText("JsonShema.txt"));
+
+            var schemaRefund = JSchema.Parse(File.ReadAllText("JsonSchemaRefund.txt"));
+
             if (httpContext.Request.Path.ToString().Contains("sale"))
             {
-                var reader = new StreamReader(httpContext.Request.Body);
-                var content = await reader.ReadToEndAsync();
                 
-                if (content.IsJsonValid()==false)
+                JObject requestJson = JObject.FromObject(httpContext.Request.BodyReader);
+                if (requestJson.IsValid(schemaSale))
                 {
-                    throw new BadHttpRequestException("invalid fdsfsdfsd data", 400);
+                    await _next(httpContext);
                 }
-                /*string jsonBody = httpContext.Request.Body.ToString().Replace();
-              JObject jsonForValid = JObject.Parse(httpContext.Request.Body);
-              
-              if (!jsonForValid.IsValid(schema))
-              {
-                  throw new BadHttpRequestException("invalid data", 498);
-              }*/
             }
-            await _next(httpContext);
+
+            else if (httpContext.Request.Path.ToString().Contains("refund"))
+            {
+                JObject requestJson = JObject.FromObject(httpContext.Request.Body);
+                
+                if (requestJson.IsValid(schemaRefund ))
+                {
+                    await _next(httpContext);
+                }
+            }
+            else
+            {
+                throw new BadHttpRequestException("invalid data", 409);  
+            }
+
+            
         }
     }
 }

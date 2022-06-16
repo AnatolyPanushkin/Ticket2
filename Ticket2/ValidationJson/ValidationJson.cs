@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
-using Newtonsoft.Json.Schema.Generation;
+
 
 namespace Ticket2.ValidationJson
 {
@@ -108,7 +108,9 @@ namespace Ticket2.ValidationJson
           
               return valid;*/
               
-              using (StreamReader file = File.OpenText(@"D:\Projects C#\Tickets2\Ticket2\Ticket2\JsonShema.txt"))
+              
+              
+              using (StreamReader file = File.OpenText(@"D:\Projects C#\Tickets2\Ticket2\Ticket2\JsonSchemaRefund.txt"))
               using (JsonTextReader reader = new JsonTextReader(file))
               {
                 JSchema schema = JSchema.Load(reader);

@@ -5,7 +5,6 @@ D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Ticket2.deps.json
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Ticket2.runtimeconfig.json
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Ticket2.runtimeconfig.dev.json
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Ticket2.dll
-D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\ref\Ticket2.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Ticket2.pdb
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Humanizer.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.Data.SqlClient.dll
@@ -56,7 +55,6 @@ D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\Ticket2.csproj.CoreComp
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\Ticket2.MvcApplicationPartsAssemblyInfo.cs
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\Ticket2.MvcApplicationPartsAssemblyInfo.cache
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\staticwebassets\Ticket2.StaticWebAssets.Manifest.cache
-D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\staticwebassets\Ticket2.StaticWebAssets.xml
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\scopedcss\bundle\Ticket2.styles.css
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\Ticket2.RazorTargetAssemblyInfo.cache
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\Ticket2.csproj.CopyComplete
@@ -64,6 +62,8 @@ D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\Ticket2.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\ref\Ticket2.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\Ticket2.pdb
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\Ticket2.genruntimeconfig.cache
-D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Namotion.Reflection.dll
-D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\NJsonSchema.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Newtonsoft.Json.Schema.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\refint\Ticket2.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll

@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net;
-using System.Threading;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using Ticket2.Models;
-using NJsonSchema;
-using Ticket2.ValidationJson;
+
 
 namespace Ticket2.Controllers
 {
     [ApiController]
-    [Route("process")]
+    [Route("v1/process")]
     
     public class ApiController:ControllerBase
     {
@@ -22,30 +21,19 @@ namespace Ticket2.Controllers
         {
             _context = context;
         }
-        /// <summary>
-        /// Метод Get для проверки подключения к БД
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("sale/{id}")]
-        public IActionResult Get(int id)
-        {
-            return Ok(_context.Segments.FirstOrDefault(m => m.Id == id));
-        }
-
-
-
+        
         /// <summary>
         /// Метод продажи белета, с валидацией от повторной продажи одного и того же билета
         /// </summary>
         /// <param name="ticket"></param>
         /// <returns></returns>
         [HttpPost("sale")]
-        public IActionResult SalePost(Ticket ticket)
+        [RequestSizeLimit(2048)]
+        public IActionResult SalePost(JObject _json)
         {
-            //достаем билет с таким же номером
-            var saledTicket =
-                _context.Segments.FirstOrDefault(
+            Ticket ticket = _json.ToObject<Ticket>();
+                //достаем билет с таким же номером
+            var saledTicket = _context.Segments.FirstOrDefault(
                     t => t.Ticket_Number == Convert.ToInt64(ticket.Passenger.Ticket_Number));
 
                 // если таких нет, то выполняем опрацию 
@@ -79,22 +67,28 @@ namespace Ticket2.Controllers
                         segment.Arrive_Datetime = Convert.ToDateTime(t.Arrive_Datetime);
                         segment.Pnr_Id = t.Pnr_Id;
                         segment.Refund = false;
-
-                        _context.Segments.Add(segment);
-                        _context.SaveChanges();
-
+                        
                         arrSegment[count] = segment;
                         count++;
                     }
 
+                    foreach (var t in arrSegment)
+                    {
+                        _context.Segments.Add(t);
+                    }
+
+                    _context.SaveChanges();
+                    
                     return Ok(arrSegment);
                 }
 
                 else
                 {
-                    return StatusCode((int) HttpStatusCode.Conflict);
+                    return StatusCode((int)HttpStatusCode.Conflict);
                 }
         }
+    
+
 
 
         /// <summary>
