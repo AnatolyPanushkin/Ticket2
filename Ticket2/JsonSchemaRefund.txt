@@ -1,0 +1,17 @@
+﻿{
+  "type": "object",
+  "properties": {
+    "operation_type": {
+      "type": "string"
+    },
+    "operration_time": {
+      "type": "string"
+    },
+    "operation_place": {
+      "type": "string"
+    },
+    "ticket_number": {
+      "type": "string"
+    }
+  }
+}
