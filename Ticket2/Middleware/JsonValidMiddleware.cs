@@ -25,31 +25,27 @@ namespace Ticket2.Middleware
 
             var schemaRefund = JSchema.Parse(File.ReadAllText("JsonSchemaRefund.txt"));
 
-            if (httpContext.Request.Path.ToString().Contains("sale"))
+            if (httpContext.Request.Path.ToString().Contains("v1/process/sale"))
             {
                 
                 JObject requestJson = JObject.FromObject(httpContext.Request.BodyReader);
-                if (requestJson.IsValid(schemaSale))
+                if (!requestJson.IsValid(schemaSale))
                 {
-                    await _next(httpContext);
+                    throw new BadHttpRequestException("invalid data", 409);
                 }
             }
 
-            else if (httpContext.Request.Path.ToString().Contains("refund"))
+            else if (httpContext.Request.Path.ToString().Contains("v1/process/refund"))
             {
                 JObject requestJson = JObject.FromObject(httpContext.Request.Body);
                 
-                if (requestJson.IsValid(schemaRefund ))
+                if (!requestJson.IsValid(schemaRefund ))
                 {
-                    await _next(httpContext);
+                    throw new BadHttpRequestException("invalid data", 409);
                 }
             }
-            else
-            {
-                throw new BadHttpRequestException("invalid data", 409);  
-            }
-
             
+            await _next(httpContext);
         }
     }
 }

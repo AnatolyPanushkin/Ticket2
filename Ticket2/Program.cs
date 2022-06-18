@@ -17,13 +17,13 @@ namespace Ticket2
             CreateHostBuilder(args).Build().Run();
         }
 
-        //используем kestrel чтобы в случае превыщающего 2килобайта размера json сгенерировать ошибку
+        
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>().UseKestrel(options =>
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    options.Limits.MaxRequestBodySize = 2048;
-                } ); });
+                    webBuilder.UseStartup<Startup>();
+                });
         
         /*Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });*/

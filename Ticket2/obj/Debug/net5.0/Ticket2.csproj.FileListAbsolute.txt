@@ -67,3 +67,9 @@ D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\refint\Ticket2.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\AutoMapper.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll

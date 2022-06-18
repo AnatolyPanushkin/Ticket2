@@ -29,14 +29,13 @@ namespace Ticket2.Controllers
         /// <returns></returns>
         [HttpPost("sale")]
         [RequestSizeLimit(2048)]
-        public IActionResult SalePost(JObject _json)
+        public IActionResult SalePost(Ticket ticket)
         {
-            Ticket ticket = _json.ToObject<Ticket>();
-                //достаем билет с таким же номером
+            //достаем билет с таким же номером
             var saledTicket = _context.Segments.FirstOrDefault(
                     t => t.Ticket_Number == Convert.ToInt64(ticket.Passenger.Ticket_Number));
-
-                // если таких нет, то выполняем опрацию 
+                
+            // если таких нет, то выполняем опрацию
                 if (saledTicket == null)
                 {
                     var arrSegment = new Segment[ticket.Routes.Length];
