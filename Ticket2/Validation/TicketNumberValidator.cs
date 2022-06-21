@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Ticket2.Models;
 
 namespace Ticket2.Validation
 {
@@ -8,7 +9,7 @@ namespace Ticket2.Validation
         
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var ticketNumber = (string)value;
+            var ticketNumber = value.ToString();
 
             if (ticketNumber.Length!=13 || ticketNumber==default)
             {

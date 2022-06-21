@@ -9,7 +9,7 @@ namespace Ticket2.Models
     {
         public string Operation_Type { get; set; }
         
-        public string Operration_Time { get; set; }
+        public string Operation_Time { get; set; }
         
         public string Operation_Place { get; set; }
         

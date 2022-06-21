@@ -33,11 +33,12 @@ namespace Ticket2
             
             services.AddControllers().AddNewtonsoftJson();
 
-            services.AddDbContext<TicketContext>(options =>
+            services.AddDbContext<Ticket2Context>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TicketContext")));
             
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Ticket2", Version = "v1"}); });
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddScoped<ITicketService, TicketService>();
         }
 

@@ -4,7 +4,7 @@
     "operation_type": {
       "type": "string"
     },
-    "operration_time": {
+    "operation_time": {
       "type": "string"
     },
     "operation_place": {

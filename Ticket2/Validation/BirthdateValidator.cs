@@ -10,7 +10,7 @@ namespace Ticket2.Validation
         
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var birthYear = ((DateTime) value).Year;
+            var birthYear = Convert.ToDateTime(value).Year;
 
             if (birthYear > DateTime.Now.Year || DateTime.Now.Year - birthYear>100)
             {

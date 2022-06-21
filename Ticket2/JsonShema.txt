@@ -1,10 +1,14 @@
 {
+  "$schema": "saleSchema.json",
+  "title": "Sale",
+  "description": "Ticket with segments",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "operation_type": {
       "type": "string"
     },
-    "operration_time": {
+    "operation_time": {
       "type": "string"
     },
     "operation_place": {
@@ -12,6 +16,7 @@
     },
     "passenger": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "name": {
           "type": "string"
@@ -41,20 +46,22 @@
           "type": "string"
         },
         "ticket_type": {
-          "type": "integer"
+          "type": "string"
         }
-      }
+      },
+      "minProperties": 10
     },
     "routes": {
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "airline_code": {
             "type": "string"
           },
-          "fligth_num": {
-            "type": "integer"
+          "flight_num": {
+            "type": "string"
           },
           "depart_place": {
             "type": "string"
@@ -71,9 +78,11 @@
           "pnr_id": {
             "type": "string"
           }
-        }
+        },
+        "minProperties": 7
       }
     }
-  }
+  },
+  "required": ["operation_type", "operation_time", "operation_place", "passenger", "routes"]
 }
             

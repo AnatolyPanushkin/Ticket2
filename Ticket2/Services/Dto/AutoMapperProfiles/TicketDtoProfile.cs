@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using Ticket2.Models;
 
 namespace Ticket2.Services.Dto.AutoMapperProfiles
@@ -8,6 +9,8 @@ namespace Ticket2.Services.Dto.AutoMapperProfiles
         public TicketDtoProfile()
         {
             CreateMap<Ticket, TicketDto>().ReverseMap();
+            CreateMap<TicketDto, Task<TicketDto>>().ReverseMap();
+            CreateMap<Ticket, Task<TicketDto>>().ReverseMap();
         }
     }
 }
