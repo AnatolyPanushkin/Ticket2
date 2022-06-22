@@ -9,6 +9,8 @@ namespace Ticket2.Models
         public string Surname { get; set; }
         public string Patronymic { get; set; }
         public string Doc_Type { get; set; }
+        
+        [DocNumberValidator]
         public string Doc_Number { get; set; }
        
         [BirthdateValidator]

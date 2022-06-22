@@ -4,9 +4,9 @@ namespace Ticket2.ErrorsSupport
 {
     public static class Extantions
     {
-        public static ErrorObject ToErrorObject(this Exception exception, Ticket2Context context)
+        public static ErrorObject ToErrorObject(this Exception exception)
         {
-            return new ErrorObject(exception, context);
+            return new ErrorObject(exception);
         }
     }
 }

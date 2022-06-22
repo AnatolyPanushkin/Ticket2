@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using Microsoft.Data.SqlClient;
+using Npgsql;
 
 namespace Ticket2.ErrorsSupport
 {
@@ -9,16 +12,39 @@ namespace Ticket2.ErrorsSupport
         public string ErrorCode { get; private set; }
         public string ErrorCodeDb { get; private set; }
         
-        public ErrorObject(Exception e, Ticket2Context context)
+        public ErrorObject(Exception e)
         {
-            ErrorMessage = e.Message;
             ErrorData = e.StackTrace;
-            BindViaDbAndMapError(context);
+            BindAndMapError(e);
         }
 
-        private void BindViaDbAndMapError(Ticket2Context context)
+        private void BindAndMapError(Exception e)
         {
-            var externalErrorCode = context;
+            if (e.InnerException is PostgresException npgex && npgex.SqlState == PostgresErrorCodes.UniqueViolation)
+            {
+                ErrorCode = "409";
+                ErrorCodeDb = "2627";
+                ErrorMessage = "ticket already is payed!";
+            }
+            else
+            {
+                ErrorMessage = e.Message;
+            }
+            /*if (e.InnerException.InnerException is SqlException sqlException)
+            {
+                switch (sqlException.Number)
+                {
+                    case 2627:
+                    {
+                        ErrorCode = "409";
+                        ErrorCodeDb = "2627";
+                        ErrorMessage = "ticket already is payed!";
+                        break;
+                    }
+                }
+            }*/
+            
         }
+        
     }
 }

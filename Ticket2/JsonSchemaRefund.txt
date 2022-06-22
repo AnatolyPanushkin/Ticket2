@@ -1,17 +1,26 @@
 ﻿{
-  "type": "object",
-  "properties": {
-    "operation_type": {
-      "type": "string"
-    },
-    "operation_time": {
-      "type": "string"
-    },
-    "operation_place": {
-      "type": "string"
-    },
-    "ticket_number": {
-      "type": "string"
-    }
-  }
+"$schema": "RefundJsonSchema.json",
+"title": "RefundJsonSchema",
+"description": "Refund request schema",
+"type": "object",
+"properties": {
+"operation_type": {
+"type": "string"
+},
+"operation_time": {
+"type": "string"
+},
+"operation_place": {
+"type": "string"
+},
+"ticket_number": {
+"type": "string"
+}
+},
+"required": [
+"operation_type",
+"operation_time",
+"operation_place",
+"ticket_number"
+]
 }
