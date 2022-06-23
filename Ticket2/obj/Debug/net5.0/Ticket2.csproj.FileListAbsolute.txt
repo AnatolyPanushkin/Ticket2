@@ -73,3 +73,4 @@ D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.Extensions.Op
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
 D:\Projects C#\Tickets2\Ticket2\Ticket2\obj\Debug\net5.0\refint\Ticket2.dll
+D:\Projects C#\Tickets2\Ticket2\Ticket2\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Versioning.dll

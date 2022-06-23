@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Ticket2.Filters;
 using Ticket2.Models;
@@ -10,8 +11,9 @@ using Ticket2.Services.TicketServices;
 namespace Ticket2.Controllers
 {
     [ApiController]
-    [Route("v1/process")]
-    
+    [Route("v{version:apiVersion}/process")]
+    [ApiVersion("4.0")]
+    [RequestSizeLimit(2048)] 
     public class ApiController:ControllerBase
     {
         private readonly ITicketService _service;
@@ -29,7 +31,6 @@ namespace Ticket2.Controllers
         /// <param name="ticket"></param>
         /// <returns></returns>
         [HttpPost("sale")]
-        [RequestSizeLimit(2048)]
         public IActionResult SalePost(Ticket ticket)
         {
             var taskResult = _service.SalePost(_mapper.Map<TicketDto>(ticket));
@@ -42,13 +43,10 @@ namespace Ticket2.Controllers
         /// <param name="refundTicket"></param>
         /// <returns></returns>
         [HttpPost("refund")]
-        [RequestSizeLimit(2048)]
         public IActionResult RefundPost(RefundTicket refundTicket)
         {
             var taskResult = _service.RefundPost(_mapper.Map<RefundTicketDto>(refundTicket));
             return Ok(taskResult.Result);
         }
-
     }
-    
 }

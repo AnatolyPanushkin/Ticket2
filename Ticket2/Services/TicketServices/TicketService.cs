@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 using Ticket2.ErrorsSupport;
 using Ticket2.Models;
 using Ticket2.Services.Dto;
@@ -17,6 +13,8 @@ namespace Ticket2.Services.TicketServices
 {
     public class TicketService:ITicketService
     {
+        const int Timeout = 12_000;
+        
         private readonly Ticket2Context _context;
         private readonly IMapper _mapper;
         
@@ -36,7 +34,10 @@ namespace Ticket2.Services.TicketServices
 
                 await _context.Segments.AddRangeAsync(ticketToSegment.MapTicketToSegment(ticket));
 
-                await _context.SaveChangesAsync();
+                var source = new CancellationTokenSource();
+                source.CancelAfter(Timeout);
+                
+                await _context.SaveChangesAsync(source.Token);
             
                 return _mapper.Map<TicketDto>(ticket);
             }
@@ -55,13 +56,14 @@ namespace Ticket2.Services.TicketServices
 
         public async Task<dynamic> RefundPost(RefundTicketDto refundTicketDto)
         {
-            
+            try
+            {
                 var refundTicket = _mapper.Map<RefundTicket>(refundTicketDto);
-
+            
                 var tickets = await _context.Segments
                     .Where(t => t.TicketNumber == refundTicket.Ticket_Number)
                     .ToListAsync();
-            
+
                 foreach (var ticket in tickets)
                 {
                     ticket.OperationType = "refund";
@@ -72,11 +74,17 @@ namespace Ticket2.Services.TicketServices
 
                 _context.Segments.UpdateRange(tickets);
 
-                await _context.SaveChangesAsync();
+                var countOfUpdates = await _context.SaveChangesAsync();
+            
+                if (countOfUpdates == 0)
+                {
+                    throw new Exception("ticket already is refunded!");
+                }
 
                 return refundTicketDto;
-            
-            /*catch (Exception e)
+
+            }
+            catch (Exception e)
             {
                 var error = e.ToErrorObject();
 
@@ -86,53 +94,7 @@ namespace Ticket2.Services.TicketServices
                     error.ErrorMessage,
                     error.ErrorCodeDb
                 };
-            }*/
-            
-
-            /*public virtual async Task InsertRangeAsync(IEnumerable<Segment> segments)
-            {
-                await _context.Segments.AddRangeAsync(segments);
-                await _context.SaveChangesAsync();
             }
-    
-            public async Task<ICollection<Segment>> FindRefundSegmentsWithSameTicketNumberAsync(string ticketNumber)
-            {
-                return await _context.Segments
-                    .Where(s => s.TicketNumber == ticketNumber && s.OperationType != "refund")
-                    .ToListAsync();
-            }
-    
-            public async Task SaveChangesAsync()
-            {
-                await _context.SaveChangesAsync();
-            }
-                
-                if (refundTicket.Operation_Type == "refund")
-                {
-                    var refundTickets = _context.Segments
-                        .Where(t => t.TicketNumber == refundTicket.Ticket_Number).Select(t=>t).ToList();
-                    
-    
-                    foreach (var rt in refundTickets)
-                    {
-                        if (rt == null || rt.Refund == true) 
-                        {
-                            return StatusCode((int) HttpStatusCode.Conflict);
-                        }
-                        rt.OperationType = "refund";
-                        rt.OperationTime = Convert.ToDateTime(refundTicket.Operation_Time);
-                        rt.OperationPlace = refundTicket.Operation_Place;
-                        rt.Refund = true;
-                        _context.Segments.Update(rt);
-                        _context.SaveChanges();
-                            
-                    }
-                    return Ok(refundTickets);
-                }
-                else
-                {
-                    return StatusCode((int) HttpStatusCode.Conflict);
-                }*/
         }
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Ticket2.Middleware;
 using Ticket2.Services.TicketServices;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Ticket2
 {
@@ -36,8 +37,9 @@ namespace Ticket2
             services.AddDbContext<Ticket2Context>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("TicketContext")));
             
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Ticket2", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v4", new OpenApiInfo {Title = "Ticket2", Version = "v4"}); });
 
+            services.AddApiVersioning();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<ITicketService, TicketService>();
         }
@@ -49,7 +51,7 @@ namespace Ticket2
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ticket2 v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v4/swagger.json", "Ticket2 v4"));
                 app.UseJsonValid();
             }
 

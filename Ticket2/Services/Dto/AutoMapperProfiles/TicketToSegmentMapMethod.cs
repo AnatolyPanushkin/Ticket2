@@ -38,7 +38,7 @@ namespace Ticket2.Services.Dto.AutoMapperProfiles
                     PnrId = t.Pnr_Id,
                     Refund = false
                 };
-
+                
                 arrSegment.Add(segment);
                 count++;
             }
