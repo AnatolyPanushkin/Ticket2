@@ -11,7 +11,7 @@ using Ticket2.Services.TicketServices;
 namespace Ticket2.Controllers
 {
     [ApiController]
-    [Route("v{version:apiVersion}/process")]
+    [Route("api/v{version:apiVersion}/process")]
     [ApiVersion("4.0")]
     [RequestSizeLimit(2048)] 
     public class ApiController:ControllerBase
@@ -33,7 +33,7 @@ namespace Ticket2.Controllers
         [HttpPost("sale")]
         public IActionResult SalePost(Ticket ticket)
         {
-            var taskResult = _service.SalePost(_mapper.Map<TicketDto>(ticket));
+            var taskResult = _service.SalePostAsync(_mapper.Map<TicketDto>(ticket));
             return Ok(taskResult.Result);
         }
 
@@ -45,7 +45,7 @@ namespace Ticket2.Controllers
         [HttpPost("refund")]
         public IActionResult RefundPost(RefundTicket refundTicket)
         {
-            var taskResult = _service.RefundPost(_mapper.Map<RefundTicketDto>(refundTicket));
+            var taskResult = _service.RefundPostAsync(_mapper.Map<RefundTicketDto>(refundTicket));
             return Ok(taskResult.Result);
         }
     }

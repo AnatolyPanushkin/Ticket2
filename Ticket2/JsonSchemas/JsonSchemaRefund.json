@@ -1,5 +1,5 @@
 ﻿{
-"$schema": "RefundJsonSchema.json",
+"$schema": "JsonSchemaRefund.json",
 "title": "RefundJsonSchema",
 "description": "Refund request schema",
 "type": "object",

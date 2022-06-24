@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +41,7 @@ namespace Ticket2
             services.AddSwaggerGen(c => { c.SwaggerDoc("v4", new OpenApiInfo {Title = "Ticket2", Version = "v4"}); });
 
             services.AddApiVersioning();
+            services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<ITicketService, TicketService>();
         }

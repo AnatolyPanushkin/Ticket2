@@ -24,7 +24,7 @@ namespace Ticket2.Services.TicketServices
             _context = context;
             _mapper = mapper;
         }
-        public async Task<dynamic> SalePost(TicketDto ticketDto)
+        public async Task<dynamic> SalePostAsync(TicketDto ticketDto)
         {
             try
             {
@@ -54,17 +54,17 @@ namespace Ticket2.Services.TicketServices
             }
         }
 
-        public async Task<dynamic> RefundPost(RefundTicketDto refundTicketDto)
+        public async Task<dynamic> RefundPostAsync(RefundTicketDto refundTicketDto)
         {
             try
             {
                 var refundTicket = _mapper.Map<RefundTicket>(refundTicketDto);
-            
-                var tickets = await _context.Segments
+
+                var tickets =  _context.Segments.AsNoTracking()
                     .Where(t => t.TicketNumber == refundTicket.Ticket_Number)
                     .ToListAsync();
 
-                foreach (var ticket in tickets)
+                foreach (var ticket in tickets.Result)
                 {
                     ticket.OperationType = "refund";
                     ticket.OperationTime = Convert.ToDateTime(refundTicket.Operation_Time);
@@ -72,7 +72,7 @@ namespace Ticket2.Services.TicketServices
                     ticket.Refund = true;
                 }
 
-                _context.Segments.UpdateRange(tickets);
+                _context.Segments.UpdateRange(tickets.Result);
 
                 var countOfUpdates = await _context.SaveChangesAsync();
             
@@ -98,3 +98,29 @@ namespace Ticket2.Services.TicketServices
         }
     }
 }
+
+/*var tickets = _context.Segments
+    .Where(t => t.TicketNumber == refundTicket.Ticket_Number)
+    .Select(t => new {t.TicketNumber,t.SerialNumber}).AsEnumerable()
+    .Select(t => new Segment
+    {
+        TicketNumber = t.TicketNumber,
+        SerialNumber = t.SerialNumber,
+        OperationType = "refund",
+        OperationTime = Convert.ToDateTime(refundTicket.Operation_Time),
+        OperationPlace = refundTicket.Operation_Place,
+        Refund = true
+    });
+foreach (var segment in tickets)
+{
+    _context.Segments.Attach(segment);
+    _context.Entry(segment).Property(t => new
+    {
+        t.TicketNumber,
+        t.SerialNumber,
+        t.OperationType,
+        t.OperationTime,
+        t.OperationPlace,
+        t.Refund
+    }).IsModified=true;
+}*/

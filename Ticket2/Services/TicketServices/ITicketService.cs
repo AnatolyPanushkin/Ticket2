@@ -6,7 +6,7 @@ namespace Ticket2.Services.TicketServices
 {
     public interface ITicketService
     {
-       Task<dynamic> SalePost(TicketDto ticketDto);
-        Task<dynamic> RefundPost(RefundTicketDto refundTicketDto);
+       Task<dynamic> SalePostAsync(TicketDto ticketDto);
+        Task<dynamic> RefundPostAsync(RefundTicketDto refundTicketDto);
     }
 }

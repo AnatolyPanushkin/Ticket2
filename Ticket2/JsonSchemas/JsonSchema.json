@@ -1,5 +1,5 @@
 {
-  "$schema": "saleSchema.json",
+  "$schema": "JsonSchema.json",
   "title": "Sale",
   "description": "Ticket with segments",
   "type": "object",

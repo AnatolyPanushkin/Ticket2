@@ -3,8 +3,10 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 
@@ -22,31 +24,45 @@ namespace Ticket2.Middleware
        }
         public async Task Invoke(HttpContext httpContext)
         {
-            var schemaSale = JSchema.Parse(File.ReadAllText("JsonShema.txt"));
+            var jsonSchema = new JsonSchemaCreator();
 
-            var schemaRefund = JSchema.Parse(File.ReadAllText("JsonSchemaRefund.txt"));
+            var requestString = httpContext.Request.Path.ToString()
+                .Split("/");
+
+            var schemaName = requestString[^1];
             
-            if (httpContext.Request.Path.ToString().Contains("sale"))
+            httpContext.Request.EnableBuffering();
+
+            var jsonBody = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
+
+            httpContext.Request.Body.Seek(0, SeekOrigin.Begin);
+
+            JObject requestJson = JObject.Parse(jsonBody);
+
+            if (!requestJson.IsValid(jsonSchema.ReturnJSchema(schemaName)))
             {
-                httpContext.Request.EnableBuffering();
-                
-                var reader = new StreamReader(httpContext.Request.Body,
-                    Encoding.UTF8, false, 2048, true);
-                
-                var jsonBody = await reader.ReadToEndAsync();
-
-                httpContext.Request.Body.Seek(0, SeekOrigin.Begin);
-
-                JObject requestJson = JObject.Parse(jsonBody);
-
-                if (!requestJson.IsValid(schemaSale))
-                {
-                    throw new BadHttpRequestException("invalid data", 409);
-                }
-               
+                throw new BadHttpRequestException("invalid data", 409);
             }
+            
+            await _next(httpContext);
+        }
+    }
+}
+//var jsonBody = await reader.ReadToEndAsync();
+/*var reader = await new StreamReader(httpContext.Request.Body,
+    Encoding.UTF8, false, 2048, true).ReadToEndAsync();*/
+//var json2 = JsonConvert.DeserializeObject<JObject>(httpContext.Request.Body.ToString()!);
+/*var req = httpContext.Request;
 
-            if (httpContext.Request.Path.ToString().Contains("refund"))
+               req.Body.Position = 0;
+               
+               StreamReader stream = new StreamReader(req.Body, Encoding.UTF8, true, 2048,true);
+               
+               string jsonBody = await stream.ReadToEndAsync();*/
+//JObject requestJson = JObject.FromObject(httpContext.Request.BodyReader);
+/*req.Body.Position = 0;*/
+
+/*if (httpContext.Request.Path.ToString().Contains("refund"))
             {
                 httpContext.Request.EnableBuffering();
                 
@@ -63,19 +79,4 @@ namespace Ticket2.Middleware
                 {
                     throw new BadHttpRequestException("invalid data", 409);
                 }
-            }
-            
-            await _next(httpContext);
-        }
-    }
-}
-
-/*var req = httpContext.Request;
-
-               req.Body.Position = 0;
-               
-               StreamReader stream = new StreamReader(req.Body, Encoding.UTF8, true, 2048,true);
-               
-               string jsonBody = await stream.ReadToEndAsync();*/
-//JObject requestJson = JObject.FromObject(httpContext.Request.BodyReader);
-/*req.Body.Position = 0;*/
+            }*/

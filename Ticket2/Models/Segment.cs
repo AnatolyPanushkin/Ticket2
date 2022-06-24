@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Ticket2
+namespace Ticket2.Models
 {
     public partial class Segment
     {

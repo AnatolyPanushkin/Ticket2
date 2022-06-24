@@ -1,30 +1,38 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿
 
 #nullable disable
+
+using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Ticket2.Models;
 
 namespace Ticket2
 {
     public partial class Ticket2Context : DbContext
     {
-        public Ticket2Context()
+        private readonly string _connectionString;
+        public Ticket2Context(string connectionString)
         {
+            _connectionString = connectionString;
         }
 
         public Ticket2Context(DbContextOptions<Ticket2Context> options)
             : base(options)
         {
+           
         }
 
         public virtual DbSet<Segment> Segments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Ticket2;Username=postgres;Password=1234");
+                optionsBuilder.UseNpgsql(_connectionString);
+               // "Host=localhost;Port=5432;Database=Ticket2;Username=postgres;Password=1234"
             }
         }
 

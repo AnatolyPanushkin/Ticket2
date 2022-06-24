@@ -22,7 +22,8 @@ namespace Ticket2
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                        .UseKestrel(kestrelOptions => kestrelOptions.Limits.MaxRequestBodySize = 2_048);
                 });
         
         /*Host.CreateDefaultBuilder(args)
